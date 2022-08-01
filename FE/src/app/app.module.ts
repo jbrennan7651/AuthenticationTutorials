@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { FormsModule } from '@angular/forms';
 
@@ -13,7 +12,6 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     LoginComponent,
-    HeaderComponent,
     HomeComponent
   ],
   imports: [

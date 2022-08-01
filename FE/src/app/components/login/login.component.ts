@@ -12,45 +12,45 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  form: any ={
+  form: any = {
     username: null,
     password: null
-  }
-  isLoginFailed = false;
+  };
   isLoggedIn = false;
-  errorMessage = ''
-  roles : string[] = [];
-  constructor(private userService: UserService,
-    private storageService: StorageService,
-    private authService: AuthService,
-    private router : Router) { }
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+
+  constructor(private authService: AuthService,
+     private storageService: StorageService) { }
 
   ngOnInit(): void {
-    if(this.storageService.isLoggedIn()){
+    if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       this.roles = this.storageService.getUser().roles;
     }
   }
 
-  login(): void{
-    const {username, password} = this.form;
+  onSubmit(): void {
+    const { username, password } = this.form;
+
     this.authService.login(username, password).subscribe({
-      next: data =>{
-        this.storageService.saveUser(data)
+      next: data => {
+        this.storageService.saveUser(data);
+
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.storageService.getUser().roles;
-        this.router.navigate(['home'])
+        this.reloadPage();
       },
-      error: err =>{
+      error: err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
       }
     });
   }
 
-  reloadPage(){
+  reloadPage(): void {
     window.location.reload();
   }
-
 }
